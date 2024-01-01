@@ -7,7 +7,7 @@ function App() {
 		<>
 			<div className='wrapper' >
 				<Input placeholder='Email'></Input>
-				<Button appearence = 'big'  >Вход!</Button>
+				<Button appearence = 'big'  >Вход</Button>
 			</div>
 		</>
 	);
