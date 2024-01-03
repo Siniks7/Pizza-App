@@ -9,7 +9,7 @@ export function Layout() {
 			<div className={styles.wrapper}>
 				<div className={styles.main}>
 					<div className={styles.avatar}>
-						<img src="avatar.png" alt="Аватар" />
+						<img src="/avatar.png" alt="Аватар" />
 					</div>
 					<div className={styles.user}>
 						<div className={styles.name}>Антон Ларичев</div>
@@ -19,14 +19,14 @@ export function Layout() {
 						<NavLink to='/' className={({ isActive }) => cn(styles['link'], {
 							[styles.active]: isActive
 						})}>
-							<img src="menu-icon.svg" alt="Меню" />Меню</NavLink>	
+							<img src="/menu-icon.svg" alt="Меню" />Меню</NavLink>	
 						<NavLink to='/cart'  className={({ isActive }) => cn(styles['link'], {
 							[styles.active]: isActive
 						})}>
-							<img src="cart-icon.svg" alt="Корзина" />Корзина<span className={styles['cart-number']}>2</span></NavLink>			
+							<img src="/cart-icon.svg" alt="Корзина" />Корзина<span className={styles['cart-number']}>2</span></NavLink>			
 					</div>
 				</div>
-				<Button appearence='small' className={styles['exit-button']} ><img src="exit-icon.svg" alt="Выход" />Выйти</Button>
+				<Button appearence='small' className={styles['exit-button']} ><img src="/exit-icon.svg" alt="Выход" />Выйти</Button>
 			</div>
 		</div>
 		<div className={styles.content}>

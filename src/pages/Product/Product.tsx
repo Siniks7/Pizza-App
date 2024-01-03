@@ -9,13 +9,13 @@ export function Product() {
 	return <div className={styles['product']}>    
 		<div className={styles['header']}>
 			<div className={styles['headling']}>
-				<button className={styles['return-button']}><img src="Rectangle.svg" alt="Возврат" /></button>
+				<button className={styles['return-button']}><img className={styles['img_exit']} src="/Rectangle.svg" alt="Возврат" /></button>
 				<Headling>Наслаждение</Headling>
 			</div>
-			<Button className={styles['cart']}><img src="cart-button-icon.svg" alt="Корзина" />В корзину</Button>
+			<Button className={styles['cart']}><img className={styles['img_cart']} src="/cart-button-icon.svg" alt="Корзина" />В корзину</Button>
 		</div>
 		<div className={styles['product_description']}>
-			<img src="product-demo.png" className={styles['image']} alt="Продукт" />
+			<img src="/product-demo.png" className={styles['image']} alt="Продукт" />
 			<div className={styles['product_description_data']}>
 				<div className={styles['price']}>
 					<span>Цена</span>
@@ -26,7 +26,7 @@ export function Product() {
 				</div>
 				<div className={styles['rating']}>
 					<span>Рейтинг</span>
-					<div className={styles['rate']}>4.5&nbsp;<img src="star-icon.svg" className={styles['star']} alt="Звезда" /></div>
+					<div className={styles['rate']}>4.5&nbsp;<img src="/star-icon.svg" className={styles['star']} alt="Звезда" /></div>
 				</div>
 				<div className={styles['consistency']}>
 					<div>Состав:</div>
