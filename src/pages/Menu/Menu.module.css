@@ -1,4 +1,11 @@
 .header {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 41px;
+}
+
+.cardlist {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 34px;
 }
