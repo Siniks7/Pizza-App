@@ -1,0 +1,9 @@
+.headling {
+  color: var(--text-color);
+  font-size: 36.41px;
+  font-family: Open Sans;
+  font-weight: 600;
+  word-wrap: break-word;
+  margin: 0;
+  line-height: 120%;
+}

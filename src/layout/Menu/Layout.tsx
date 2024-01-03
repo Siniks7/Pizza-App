@@ -1,6 +1,7 @@
-import { Link, Outlet } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 import styles from './Layout.module.css';
 import Button from '../../components/Button/Button';
+import cn from 'classnames';
 
 export function Layout() {
 	return <div className={styles.layout}>
@@ -15,15 +16,20 @@ export function Layout() {
 						<div className={styles.email} >alaricode@ya.ru</div>
 					</div>
 					<div className={styles.links}>						
-						<Link to='/' className={styles.link} ><img src="menu-icon.svg" alt="Меню" />Меню</Link>	
-						<Link to='/cart'  className={styles.link} ><img src="cart-icon.svg" alt="Корзина" />Корзина<span className={styles['cart-number']}>2</span></Link>
-						
+						<NavLink to='/' className={({ isActive }) => cn(styles['link'], {
+							[styles.active]: isActive
+						})}>
+							<img src="menu-icon.svg" alt="Меню" />Меню</NavLink>	
+						<NavLink to='/cart'  className={({ isActive }) => cn(styles['link'], {
+							[styles.active]: isActive
+						})}>
+							<img src="cart-icon.svg" alt="Корзина" />Корзина<span className={styles['cart-number']}>2</span></NavLink>			
 					</div>
 				</div>
 				<Button appearence='small' className={styles['exit-button']} ><img src="exit-icon.svg" alt="Выход" />Выйти</Button>
 			</div>
 		</div>
-		<div>
+		<div className={styles.content}>
 			<Outlet />
 		</div>
 	</div>;
