@@ -11,7 +11,7 @@ export function Product() {
 	const { id } = useParams();
 	const myID = Number(id);
 
-	const [products, setProducts] = useState<Product[]>([]);
+	const [products, setProducts] = useState<Product>();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [error, setError] = useState<string | undefined>();
 
@@ -19,15 +19,9 @@ export function Product() {
 	const getMenu = async () => {
 		try {
 			setIsLoading(true);
-			const { data } = await axios.get<Product[]>(`${PREFIX}/products`);
-			const myProducts = data.filter((p) => p.id === myID);
-			if (myProducts !== undefined) {
-				setProducts(myProducts);
-				setIsLoading(false);
-			} else {
-				return;
-			}
-			
+			const { data } = await axios.get<Product>(`${PREFIX}/products/${myID}`);
+			setProducts(data);
+			setIsLoading(false);	
 		} catch (e) {
 			if (e instanceof AxiosError) {
 				setError(e.message);
@@ -43,34 +37,34 @@ export function Product() {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 		
-	if (!isLoading && products[0] !== undefined ) {				
+	if (!isLoading && products) {				
 		return <div className={styles['product']}>    
 			<div className={styles['header']}>
 				<div className={styles['headling']}>
 					<Link to={'/'} className={styles['return-button']}><img className={styles['img_exit']} src="/Rectangle.svg" alt="Возврат" /></Link>
-					<Headling>{products[0].name}</Headling>
+					<Headling>{products.name}</Headling>
 				</div>
 				<Button className={styles['cart']}><img className={styles['img_cart']} src="/cart-button-icon.svg" alt="Корзина" />В корзину</Button>
 			</div>
 			<div className={styles['product_description']}>
-				<img src={products[0].image} className={styles['image']} alt="Продукт" />
+				<img src={products.image} className={styles['image']} alt="Продукт" />
 				<div className={styles['product_description_data']}>
 					<div className={styles['price']}>
 						<span>Цена</span>
 						<div>
-							<span className={styles['price_cost']}>{products[0].price}</span>&nbsp;
+							<span className={styles['price_cost']}>{products.price}</span>&nbsp;
 							<span className={styles['currency']}>₽</span>
 						</div>
 					</div>
 					<div className={styles['rating']}>
 						<span>Рейтинг</span>
-						<div className={styles['rate']}>{products[0].rating}&nbsp;<img src="/star-icon.svg" className={styles['star']} alt="Звезда" /></div>
+						<div className={styles['rate']}>{products.rating}&nbsp;<img src="/star-icon.svg" className={styles['star']} alt="Звезда" /></div>
 					</div>
 					<div className={styles['consistency']}>
 						<div>Состав:</div>
 						<div className={styles['consistency_all']}>
 							<ul>
-								{products[0].ingredients.map(i => (
+								{products.ingredients.map(i => (
 									<li>{i.charAt(0).toUpperCase() + i.slice(1)}</li>))}	
 							</ul>
 						</div>
