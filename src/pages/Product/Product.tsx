@@ -3,7 +3,7 @@ import Button from '../../components/Button/Button';
 import styles from './Product.module.css';
 import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { PREFIX } from '../../helpers/API';
 import { Product } from '../../interfaces/product.interface';
 
@@ -13,7 +13,9 @@ export function Product() {
 
 	const [products, setProducts] = useState<Product[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [error, setError] = useState<string | undefined>();
 
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const getMenu = async () => {
 		try {
 			setIsLoading(true);
@@ -27,6 +29,9 @@ export function Product() {
 			}
 			
 		} catch (e) {
+			if (e instanceof AxiosError) {
+				setError(e.message);
+			}
 			console.error(e);
 			setIsLoading(false);
 			return;
@@ -35,11 +40,10 @@ export function Product() {
 	
 	useEffect(() => {
 		getMenu();
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 		
-	if (!isLoading && products[0] !== undefined ) {
-		console.log(products);
-		
+	if (!isLoading && products[0] !== undefined ) {				
 		return <div className={styles['product']}>    
 			<div className={styles['header']}>
 				<div className={styles['headling']}>
@@ -75,7 +79,9 @@ export function Product() {
 				</div>
 			</div>
 		</div>;
-	} else {
+	} else if (isLoading)  {
 		return <>Загружается продукт...</>;
+	} else {
+		{error && <>{error}</>;}
 	}
 }
