@@ -67,7 +67,7 @@ export function Product() {
 						<div className={styles['consistency_all']}>
 							<ul>
 								{products[0].ingredients.map(i => (
-									<li>{i}</li>))}	
+									<li>{i.charAt(0).toUpperCase() + i.slice(1)}</li>))}	
 							</ul>
 						</div>
 					</div>
