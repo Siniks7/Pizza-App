@@ -2,11 +2,13 @@
 import Headling from '../../components/Headling/Headling';
 import Button from '../../components/Button/Button';
 import styles from './Product.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+// import { ProductCardProps } from '../../components/ProductCard/ProductCard.props';
 
 export function Product() {
-	// const { id } = useParams();
-
+	const { id } = useParams();
+	console.log(id);
+	
 	return <div className={styles['product']}>    
 		<div className={styles['header']}>
 			<div className={styles['headling']}>
