@@ -6,6 +6,7 @@
 
 .cardlist {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 34px;
+  grid-template-columns: repeat(auto-fill, 320px);
+  grid-row-gap: 34px;
+  grid-column-gap: 45px;
 }
