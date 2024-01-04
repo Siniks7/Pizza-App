@@ -1,4 +1,4 @@
 
 export function Error() {
-	return <>Error</>;
+	return <>Ошибка</>;
 }

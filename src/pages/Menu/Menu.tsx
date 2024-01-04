@@ -5,21 +5,27 @@ import styles from './Menu.module.css';
 import { useEffect, useState } from 'react';
 import { PREFIX } from '../../helpers/API';
 import { Product } from '../../interfaces/product.interface';
+import axios from 'axios';
 
 export function Menu() {
 
 	const [products, setProducts] = useState<Product[]>([]);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const getMenu = async () => {
 		try {
-			const res = await fetch(`${PREFIX}/products`);
-			if (!res.ok) {
-				return;
-			}
-			const data = await res.json() as Product[];
+			setIsLoading(true);
+			// await new Promise<void>((resolve) => {
+			// 	setTimeout(() => {
+			// 		resolve();
+			// 	}, 2000);
+			// });
+			const { data } = await axios.get<Product[]>(`${PREFIX}/products`);
 			setProducts(data);
+			setIsLoading(false);
 		} catch (e) {
 			console.error(e);
+			setIsLoading(false);
 			return;
 		}
 	};
@@ -35,7 +41,7 @@ export function Menu() {
 				<Search placeholder='Введите блюдо или состав' ></Search>
 			</div>
 			<div className={styles['cardlist']}>
-				{products.map(p => (
+				{!isLoading && products.map(p => (
 					<ProductCard
 						key={p.id}
 						id={p.id}
@@ -46,6 +52,7 @@ export function Menu() {
 						image={p.image}
 					/>
 				))}
+				{isLoading && <>Загружаем продукты...</>}
 			</div>
 		</div>
 	);
