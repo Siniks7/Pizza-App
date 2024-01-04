@@ -19,7 +19,7 @@ export function Product() {
 	const getMenu = async () => {
 		try {
 			setIsLoading(true);
-			const { data } = await axios.get<Product[]>(`${PREFIX}/products`);
+			const { data } = await axios.get<Product[]>(`${PREFIX}/productsk`);
 			const myProducts = data.filter((p) => p.id === myID);
 			if (myProducts !== undefined) {
 				setProducts(myProducts);
@@ -82,6 +82,6 @@ export function Product() {
 	} else if (isLoading)  {
 		return <>Загружается продукт...</>;
 	} else {
-		{error && <>{error}</>;}
+		return <>{error && <>{error}</>}</>;
 	}
 }
