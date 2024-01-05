@@ -17,6 +17,13 @@
   margin-bottom: 31px;
 }
 
+.error {
+  background: #ffc529;
+  color: white;
+  padding: 20px;
+  margin-bottom: 10px;
+}
+
 .input {
   width: 282px;
 }
