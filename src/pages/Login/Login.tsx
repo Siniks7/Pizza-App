@@ -6,16 +6,8 @@ import styles from './Login.module.css';
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import { PREFIX } from '../../helpers/API';
+import { LoginForm }  from '../../interfaces/validation';
 
-
-export type LoginForm = {
-	email: {
-		value: string;
-	};
-	password: {
-		value: string;
-	};
-}
 
 export function Login() {
 	let emailValidity = true;
