@@ -3,11 +3,18 @@ import Button from '../../components/Button/Button';
 import Headling from '../../components/Headling/Headling';
 import Input from '../../components/Input/Input';
 import styles from './Login.module.css';
+import { FormEvent } from 'react';
 
 export function Login() {
+
+	function submit(e: FormEvent) {
+		e.preventDefault();
+		console.log(e);
+	}
+
 	return <div className={styles.login}>
 		<Headling className={styles['headling']}>Вход</Headling>
-		<form className={styles['login_form']}>
+		<form className={styles['login_form']}  onSubmit={submit}>
 			<div>
 				<label htmlFor ="email" className={styles['form-label']}>
 					<div  className={styles['form-label']}>Ваш email</div></label>

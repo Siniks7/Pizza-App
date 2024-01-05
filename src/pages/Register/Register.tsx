@@ -3,13 +3,20 @@ import styles from './Register.module.css';
 import Button from '../../components/Button/Button';
 import Input from '../../components/Input/Input';
 import Headling from '../../components/Headling/Headling';
+import { FormEvent } from 'react';
 
 export function Register() {
+
+	function submit(e: FormEvent) {
+		e.preventDefault();
+		console.log(e);
+	}
+
 	return <div className={styles.login}>
 		<Headling className={styles['headling']}>Регистрация</Headling>
-		<form className={styles['login_form']}>
+		<form className={styles['login_form']} onSubmit={submit} >
 			<div>
-				<label htmlFor ="email" className={styles['form-label']}>
+				<label htmlFor ="email" className={styles['form-label']} >
 					<div  className={styles['form-label']}>Ваш email</div></label>
 				<Input placeholder='Email' name= 'email' className={styles['input']}></Input>	
 			</div>
