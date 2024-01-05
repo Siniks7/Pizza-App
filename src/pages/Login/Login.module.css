@@ -1,9 +1,10 @@
 .login {
-  padding: 0 115px 0 88px;
+  /* padding: 0 115px 0 88px; */
   display: flex;
   flex-direction: column;
+  max-width: 500px;
   /* align-items: center; */
-  justify-content: center;
+  /* justify-content: center; */
 }
 
 .login_form {
