@@ -79,17 +79,17 @@ export function Register() {
 			<div>
 				<label htmlFor ="email" className={styles['form-label']} >
 					<div  className={styles['form-label']}>Ваш email</div></label>
-				<Input ref={emailRef} placeholder='Email' name= 'email' className={styles['input']}></Input>	
+				<Input isValid = {emailIsValid} ref={emailRef} placeholder='Email' name= 'email' className={styles['input']}></Input>	
 			</div>
 			<div>
 				<label htmlFor ="password" className={styles['form-label']}>
 					<div  className={styles['form-label']} >Ваш пароль</div></label>
-				<Input ref={passwordRef} placeholder='Пароль' name= 'password' className={styles['input']}></Input>
+				<Input ref={passwordRef} isValid = {passwordIsValid} placeholder='Пароль' name= 'password' className={styles['input']}></Input>
 			</div>
 			<div>
 				<label htmlFor ="name" className={styles['form-label']}>
 					<div  className={styles['form-label']} >Ваше имя</div></label>
-				<Input ref={nameRef} placeholder='Имя' name= 'name' className={styles['input']}></Input>
+				<Input ref={nameRef} isValid = {nameIsValid} placeholder='Имя' name= 'name' className={styles['input']}></Input>
 			</div>
 			<div className={styles['button']}>
 				<Button appearence='big' className={styles['button_element']}>ЗАРЕГИСТРИРОВАТЬСЯ</Button>			
