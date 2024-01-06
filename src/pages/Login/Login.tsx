@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../components/Button/Button';
 import Headling from '../../components/Headling/Headling';
 import Input from '../../components/Input/Input';
@@ -7,7 +7,7 @@ import { FormEvent, useEffect, useRef, useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import { PREFIX } from '../../helpers/API';
 import { LoginForm }  from '../../interfaces/validation';
-
+import { LoginResponse } from '../../interfaces/auth.Interface';
 
 export function Login() {
 	let emailValidity = true;
@@ -18,7 +18,7 @@ export function Login() {
 	const [isValid, setIsValid] = useState<boolean>(true);
 	const emailRef = useRef<HTMLInputElement | null>(null);
 	const passwordRef = useRef<HTMLInputElement | null>(null);
-
+	const navigate = useNavigate();
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	function focusError() {
 		switch(true) {
@@ -70,10 +70,12 @@ export function Login() {
 
 	const sendLogin = async (email: string, password: string) => {
 		try {
-			const { data } = await axios.post(`${PREFIX}/auth/login`, {
+			const { data } = await axios.post<LoginResponse>(`${PREFIX}/auth/login`, {
 				email,
 				password
 			});
+			localStorage.setItem('jwt', data.access_token);
+			navigate('/');
 			console.log(data);
 		} catch (e) {
 			if (e instanceof AxiosError) {
