@@ -3,11 +3,18 @@ import Button from '../../components/Button/Button';
 import Headling from '../../components/Headling/Headling';
 import Input from '../../components/Input/Input';
 import styles from './Login.module.css';
-import { FormEvent, useEffect, useRef, useState } from 'react';
-import axios, { AxiosError } from 'axios';
-import { PREFIX } from '../../helpers/API';
+import { useRef } from 'react';
+
+
 import { LoginForm }  from '../../interfaces/validation';
-import { LoginResponse } from '../../interfaces/auth.Interface';
+
+import { useDispatch } from 'react-redux';
+import { AppDispath } from '../../store/store';
+
+import { FormEvent, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
+import { login } from '../../store/user.slice';
 
 export function Login() {
 	let emailValidity = true;
@@ -19,6 +26,17 @@ export function Login() {
 	const emailRef = useRef<HTMLInputElement | null>(null);
 	const passwordRef = useRef<HTMLInputElement | null>(null);
 	const navigate = useNavigate();
+	const dispatch = useDispatch<AppDispath>();
+
+	const jwt = useSelector((s: RootState) => s.user.jwt);
+
+	useEffect(() => {
+		if (jwt) {
+			navigate('/');
+		}
+	}, [jwt, navigate]);
+
+
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	function focusError() {
 		switch(true) {
@@ -69,19 +87,19 @@ export function Login() {
 	}
 
 	const sendLogin = async (email: string, password: string) => {
-		try {
-			const { data } = await axios.post<LoginResponse>(`${PREFIX}/auth/login`, {
-				email,
-				password
-			});
-			localStorage.setItem('jwt', data.access_token);
-			navigate('/');
-			console.log(data);
-		} catch (e) {
-			if (e instanceof AxiosError) {
-				setError(e.response?.data.message);
-			}
-		}
+		dispatch(login({ email, password }));
+		// try {
+		// 	const { data } = await axios.post<LoginResponse>(`${PREFIX}/auth/login`, {
+		// 		email,
+		// 		password
+		// 	});
+		// 	dispatch(userActions.addJwt(data.access_token));
+		// 	navigate('/');
+		// } catch (e) {
+		// 	if (e instanceof AxiosError) {
+		// 		setError(e.response?.data.message);
+		// 	}
+		// }
 
 	};
 
