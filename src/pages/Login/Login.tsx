@@ -4,22 +4,18 @@ import Headling from '../../components/Headling/Headling';
 import Input from '../../components/Input/Input';
 import styles from './Login.module.css';
 import { useRef } from 'react';
-
-
+import { login, userActions } from '../../store/user.slice';
 import { LoginForm }  from '../../interfaces/validation';
-
 import { useDispatch } from 'react-redux';
 import { AppDispath } from '../../store/store';
-
 import { FormEvent, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
-import { login } from '../../store/user.slice';
+
 
 export function Login() {
 	let emailValidity = true;
 	let passwordValidity = true;
-	const [error, setError] = useState<string | null>();
 	const [emailIsValid, setEmailIsValid] = useState<boolean>(true);
 	const [passwordIsValid, setPasswordIsValid] = useState<boolean>(true);
 	const [isValid, setIsValid] = useState<boolean>(true);
@@ -27,8 +23,8 @@ export function Login() {
 	const passwordRef = useRef<HTMLInputElement | null>(null);
 	const navigate = useNavigate();
 	const dispatch = useDispatch<AppDispath>();
-
-	const jwt = useSelector((s: RootState) => s.user.jwt);
+	const { jwt, loginErrorMessage } = useSelector((s: RootState) => s.user);
+	
 
 	useEffect(() => {
 		if (jwt) {
@@ -69,7 +65,7 @@ export function Login() {
 
 	async function submit(e: FormEvent) {
 		e.preventDefault();
-		setError(null);
+		dispatch(userActions.clearLoginError());
 		const target = e.target as typeof e.target & LoginForm;
 		const { email, password } = target;
 		const emailVal = email.value.trim().length;
@@ -105,7 +101,7 @@ export function Login() {
 
 	return <div className={styles.login}>
 		<Headling className={styles['headling']}>Вход</Headling>
-		{error && <div className={styles['error']}>{error}</div>}
+		{loginErrorMessage && <div className={styles['error']}>{loginErrorMessage}</div>}
 		<form className={styles['login_form']}  onSubmit={submit}>
 			<div>
 				<label htmlFor ="email" className={styles['form-label']}>

@@ -1,12 +1,15 @@
 import { loadState } from './storage';
 import { LoginResponse } from '../interfaces/auth.Interface';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { PREFIX } from '../helpers/API';
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { RootState } from './store';
+import { Profile } from '../interfaces/user.interface';
 
 export interface UserState {
 	jwt: string | null;
 	loginErrorMessage?: string;
+	profile?: Profile;
 }
 
 export const JWT_PERSISTENT_STATE = 'userData';
@@ -21,9 +24,27 @@ const initialState: UserState = {
 
 export const login = createAsyncThunk('user/login',
 	async (params: { email: string, password: string }) => {
-		const { data } = await axios.post<LoginResponse>(`${PREFIX}/auth/login`, {
-			email: params.email,
-			password: params.password
+		try {
+			const { data } = await axios.post<LoginResponse>(`${PREFIX}/auth/login`, {
+				email: params.email,
+				password: params.password
+			});
+			return data;
+		} catch (e) {
+			if (e instanceof AxiosError) {
+				throw new Error(e.response?.data.message);
+			}
+		}
+	}
+);
+
+export const getProfile = createAsyncThunk<Profile, void, { state: RootState }>('user/getProfile',
+	async (_, thunkApi) => {
+		const jwt = thunkApi.getState().user.jwt;
+		const { data } = await axios.get<Profile>(`${PREFIX}/user/profile`, {
+			headers: {
+				Authorization: `Bearer ${jwt}`
+			}
 		});
 		return data;
 	}
@@ -38,14 +59,23 @@ export const userSlice = createSlice({
 		},
 		logout: (state) => {
 			state.jwt = null;
+		},
+		clearLoginError: (state) => {
+			state.loginErrorMessage = undefined;
 		}
 	},
 	extraReducers: (builder) => {
-		builder.addCase(login.fulfilled, (state, action: PayloadAction<LoginResponse>) => {
+		builder.addCase(login.fulfilled, (state, action) => {
+			if (!action.payload) {
+				return;
+			}
 			state.jwt = action.payload.access_token;
 		});
 		builder.addCase(login.rejected, (state, action) => {
 			state.loginErrorMessage = action.error.message;
+		});
+		builder.addCase(getProfile.fulfilled, (state, action) => {
+			state.profile = action.payload;
 		});
 	}
 	
