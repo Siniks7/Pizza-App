@@ -1,6 +1,6 @@
 import { loadState } from './storage';
 import { LoginResponse } from '../interfaces/auth.Interface';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { PREFIX } from '../helpers/API';
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from './store';
@@ -24,17 +24,11 @@ const initialState: UserState = {
 
 export const login = createAsyncThunk('user/login',
 	async (params: { email: string, password: string }) => {
-		try {
-			const { data } = await axios.post<LoginResponse>(`${PREFIX}/auth/login`, {
-				email: params.email,
-				password: params.password
-			});
-			return data;
-		} catch (e) {
-			if (e instanceof AxiosError) {
-				throw new Error(e.response?.data.message);
-			}
-		}
+		const { data } = await axios.post<LoginResponse>(`${PREFIX}/auth/login`, {
+			email: params.email,
+			password: params.password
+		});
+		return data;
 	}
 );
 
