@@ -1,10 +1,13 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './Register.module.css';
 import Button from '../../components/Button/Button';
 import Input from '../../components/Input/Input';
 import Headling from '../../components/Headling/Headling';
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import { RegForm }  from '../../interfaces/validation';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispath, RootState } from '../../store/store';
+import { register, userActions } from '../../store/user.slice';
 
 
 export function Register() {
@@ -19,7 +22,9 @@ export function Register() {
 	const emailRef = useRef<HTMLInputElement | null>(null);
 	const passwordRef = useRef<HTMLInputElement | null>(null);
 	const nameRef = useRef<HTMLInputElement | null>(null);
-
+	const dispatch = useDispatch<AppDispath>();
+	const { jwt, registerErrorMessage } = useSelector((s: RootState) => s.user);
+	const navigate = useNavigate();
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	function focusError() {
 		switch(true) {
@@ -40,6 +45,12 @@ export function Register() {
 	}
 
 	useEffect(() => {
+		if (jwt) {
+			navigate('/');
+		}
+	}, [jwt, navigate]);
+
+	useEffect(() => {
 		let timerId : number;
 		if (!emailIsValid || !passwordIsValid || !nameIsValid) {
 			focusError();
@@ -53,8 +64,9 @@ export function Register() {
 			clearTimeout(timerId);
 	}, [emailIsValid, focusError, isValid, passwordIsValid, nameIsValid]);
 
-	function submit(e: FormEvent) {
+	async function submit(e: FormEvent) {
 		e.preventDefault();
+		dispatch(userActions.clearRegisterError());
 		const target = e.target as typeof e.target & RegForm;
 		const { email, password, name } = target;
 		const emailVal = email.value.trim().length;
@@ -71,10 +83,16 @@ export function Register() {
 			return;
 		}
 		setIsValid(true);
+		await sendRegistration(email.value, password.value, name.value);
 	}
+
+	const sendRegistration = async (email: string, password: string, name: string) => {
+		dispatch(register({ email, password, name }));
+	};
 
 	return <div className={styles.login}>
 		<Headling className={styles['headling']}>Регистрация</Headling>
+		{registerErrorMessage && <div className={styles['error']}>{registerErrorMessage}</div>}
 		<form className={styles['login_form']} onSubmit={submit} >
 			<div>
 				<label htmlFor ="email" className={styles['form-label']} >

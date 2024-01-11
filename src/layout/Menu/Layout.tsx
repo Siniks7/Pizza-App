@@ -22,8 +22,6 @@ export function Layout() {
 	useEffect(() => {
 		dispatch(getProfile());
 	}, [dispatch]);
-
-	console.log(profile);
 	
 	return <div className={styles.layout}>
 		<div className={styles.menu}>

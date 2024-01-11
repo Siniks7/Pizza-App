@@ -25,6 +25,13 @@
   margin-top: 20px;
 }
 
+.error {
+  background: #ffc529;
+  color: white;
+  padding: 20px;
+  margin-bottom: 10px;
+}
+
 .button_element {
   width: 248px;
   height: 60px;
