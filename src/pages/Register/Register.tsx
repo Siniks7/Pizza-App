@@ -10,6 +10,7 @@ import { AppDispath, RootState } from '../../store/store';
 import { register, userActions } from '../../store/user.slice';
 
 
+
 export function Register() {
 
 	let emailValidity = true;
