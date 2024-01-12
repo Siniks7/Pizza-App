@@ -2,14 +2,24 @@ import Headling from '../../components/Headling/Headling';
 import Button from '../../components/Button/Button';
 import styles from './Product.module.css';
 import { Link, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import { PREFIX } from '../../helpers/API';
 import { Product } from '../../interfaces/product.interface';
+import { useDispatch } from 'react-redux';
+import { AppDispath } from '../../store/store';
+import { cartActions } from '../../store/cart.slice';
 
 export function Product() {
 	const { id } = useParams();
 	const myID = Number(id);
+
+	const dispatch = useDispatch<AppDispath>();
+
+	const add = (e: MouseEvent) => {
+		e.preventDefault();
+		dispatch(cartActions.add(myID));
+	};
 
 	const [products, setProducts] = useState<Product>();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -44,7 +54,7 @@ export function Product() {
 					<Link to={'/'} className={styles['return-button']}><img className={styles['img_exit']} src="/Rectangle.svg" alt="Возврат" /></Link>
 					<Headling>{products.name}</Headling>
 				</div>
-				<Button className={styles['cart']}><img className={styles['img_cart']} src="/cart-button-icon.svg" alt="Корзина" />В корзину</Button>
+				<Button onClick={add} className={styles['cart']}><img className={styles['img_cart']} src="/cart-button-icon.svg" alt="Корзина" />В корзину</Button>
 			</div>
 			<div className={styles['product_description']}>
 				<img src={products.image} className={styles['image']} alt="Продукт" />
