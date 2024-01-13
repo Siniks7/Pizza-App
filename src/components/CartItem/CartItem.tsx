@@ -19,7 +19,6 @@ function CartItem(props: CartItemProps) {
 		dispatch(cartActions.delete(props.id));
 	};
 
-
 	return (
 		<div className={styles['item']}>
 			<div className={styles['image']} style={{ backgroundImage: `url('${props.image}')` }}></div>
