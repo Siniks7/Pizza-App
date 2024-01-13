@@ -16,7 +16,7 @@
 .actions {
 	margin-left: auto;
 	display: flex;
-	gap: 5px;
+	gap: 7px;
 	align-items: center;
 	align-self: flex-start;
 }
@@ -52,6 +52,7 @@
 	border-radius: 50%;
 	width: 29px;
 	height: 29px;
+	cursor: pointer;
 }
 
 .plus {
@@ -63,6 +64,7 @@
 	border-radius: 50%;
 	width: 29px;
 	height: 29px;
+	cursor: pointer;
 }
 
 .remove {
@@ -73,6 +75,7 @@
 	border: none;
 	width: 29px;
 	height: 29px;
+	cursor: pointer;
 }
 
 .number {

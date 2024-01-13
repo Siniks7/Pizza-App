@@ -12,9 +12,11 @@ function CartItem(props: CartItemProps) {
 	};
 
 	const descrease = () => {
+		dispatch(cartActions.decrease(props.id));
 	};
 
 	const remove = () => {
+		dispatch(cartActions.delete(props.id));
 	};
 
 
