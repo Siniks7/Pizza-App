@@ -30,6 +30,7 @@ export function Cart() {
 
 	return <>
 		<Headling className={styles['headling']}>Корзина</Headling>
+		{!items.length && <div className={styles['error']}>У вас нет товаров в корзине</div>}
 		{items.map(i => {
 			const product = cartProducts.find(p => p.id === i.id);
 			if (!product) {
