@@ -12,12 +12,8 @@ export interface CartState {
 	items: CartItem[];
 }
 
-export interface CartPersistentState {
-	items: CartItem[] | [];
-}
-
-const initialState: CartState = {
-	items: loadState<CartPersistentState>(CART_PERSISTENT_STATE)?.items ?? []
+const initialState: CartState = loadState<CartState>(CART_PERSISTENT_STATE) ?? {
+	items: []
 };
 
 export const cartSlice = createSlice({
