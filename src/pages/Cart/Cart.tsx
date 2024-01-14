@@ -9,6 +9,7 @@ import { PREFIX } from '../../helpers/API';
 import styles from './Cart.module.css';
 import Button from '../../components/Button/Button';
 import { useNavigate } from 'react-router-dom';
+import { cartActions } from '../../store/cart.slice';
 
 export function Cart() {
 
@@ -57,7 +58,7 @@ export function Cart() {
 				Authorization: `Bearer ${jwt}`
 			}
 		});
-		// dispatch(cartActions.clean());
+		dispatch(cartActions.clean());
 		navigate('/success');
 	};
 
