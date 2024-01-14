@@ -38,3 +38,11 @@
 .text span {
 	color: var(--sub-color, #9796A1);
 }
+
+.checkout {
+	max-width: 512px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 70px;
+}

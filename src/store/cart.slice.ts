@@ -23,6 +23,9 @@ export const cartSlice = createSlice({
 		delete: (state, action: PayloadAction<number>) => {
 			state.items = state.items.filter(i => i.id !== action.payload);
 		},
+		clean: (state) => {
+			state.items = [];
+		},
 		decrease: (state, action: PayloadAction<number>) => {
 			const existed = state.items.find(i => i.id === action.payload);
 			if (!existed) {
