@@ -1,4 +1,7 @@
+import styles from './Error.module.css';
 
 export function Error() {
-	return <>Ошибка</>;
+	return <div className={styles.error}>
+	Ошибка
+	</div>;
 }
